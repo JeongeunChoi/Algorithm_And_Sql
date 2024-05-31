@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.algorithm;
 
 public class PRGM_뒤에있는큰수찾기 {
 
