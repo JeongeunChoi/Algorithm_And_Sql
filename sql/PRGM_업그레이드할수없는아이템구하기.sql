@@ -1,0 +1,16 @@
+-- NOT EXISTS 사용
+SELECT ITEM_ID, ITEM_NAME, RARITY
+FROM ITEM_INFO T1
+WHERE NOT EXISTS (SELECT 1 FROM ITEM_TREE T2 WHERE T1.ITEM_ID = T2.PARENT_ITEM_ID)
+ORDER BY ITEM_ID DESC;
+
+-- NOT IN 사용
+SELECT ITEM_ID, ITEM_NAME, RARITY
+FROM ITEM_INFO T1
+WHERE ITEM_ID NOT IN (SELECT PARENT_ITEM_ID FROM ITEM_TREE WHERE PARENT_ITEM_ID IS NOT NULL)
+ORDER BY ITEM_ID DESC;
+
+-- (NOT) IN : 실제 데이터들의 값 리스트 하나하나 비교하여 일치하는지 확인한다.
+-- IN 의 경우 값 리스트에 대해 == 확인
+-- NOT IN의 경우 값 리스트에 대해 != 확인하는데, 이때 NULL 값과의 비교는 항상 FALSE를 반환하므로 아무 데이터도 반환하지 못하게 된다.
+-- (NOT) EXISTS : 해당 ROW 가 존재하는지만 확인하여, TRUE 혹은 FALSE 를 반환한다.
