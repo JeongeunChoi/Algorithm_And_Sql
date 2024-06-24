@@ -1,0 +1,16 @@
+-- GROUP BY 없이 LEFT OUTER JOIN 사용
+SELECT DISTINCT T1.CAR_ID, IFNULL(T2.AVAILABILITY, "대여 가능") AS AVAILABILITY
+FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY T1 LEFT JOIN (SELECT CAR_ID, "대여중" AS AVAILABILITY
+                                                     FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+                                                     WHERE START_DATE <= '2022-10-16' && END_DATE >= '2022-10-16') T2
+                                          ON T1.CAR_ID = T2.CAR_ID
+ORDER BY T1.CAR_ID DESC;
+
+-- GROUP BY와 CASE WHEN 사용
+SELECT CAR_ID, CASE WHEN SUM(CASE WHEN START_DATE <= '2022-10-16'
+                            AND END_DATE >= '2022-10-16'
+                            THEN 1 ELSE 0 END) = 0
+                    THEN '대여 가능' ELSE '대여중' END AS AVAILABILITY
+FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+GROUP BY CAR_ID
+ORDER BY CAR_ID DESC;
