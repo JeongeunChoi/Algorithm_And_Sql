@@ -13,7 +13,7 @@ public class Ramyeon {
     }
 
     public void openBag() {
-        System.out.println("진라면 봉지 뜯기");
+        System.out.println("라면 봉지 뜯기");
     }
 
     public void takeOutNoodles() {
